@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MovieCollectionViewCell: UICollectionViewCell {
 
@@ -22,5 +23,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     static func nib() -> UINib {
         return UINib(nibName: "MovieCollectionViewCell", bundle: nil)
+    }
+    
+    public func configureCell(with model: String) {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model)") else { return }
+        self.img_movie.sd_setImage(with: url)
     }
 }

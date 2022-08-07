@@ -13,10 +13,12 @@ class HomeVC: UIViewController {
     
     let sectionTitles: [String] = ["Trending Movies", "Trending TV", "Popular", "UpComing Movies", "Top Rated"]
     
+    var movies: [MovieRes] = []
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
@@ -45,6 +47,63 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeMovieCell.identifier, for: indexPath) as? HomeMovieCell
         else { fatalError("HomeMovieCell Not Found") }
+        
+        switch indexPath.section {
+            
+        case Sections.trendingMovies.rawValue:
+            APICaller.shared.getTrendingMovies { res in
+                switch res {
+                case .success(let movies):
+                    cell.configure(with: movies)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            
+        case Sections.trendingTv.rawValue:
+            APICaller.shared.getTrendingTVs { res in
+                switch res {
+                case .success(let tvs):
+                    cell.configure(with: tvs)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            
+        case Sections.popular.rawValue:
+            APICaller.shared.getPopular { res in
+                switch res {
+                case .success(let populars):
+                    cell.configure(with: populars)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            
+        case Sections.upcomingMovies.rawValue:
+            APICaller.shared.getUpcomingMovies { res in
+                switch res {
+                case .success(let upcomingMovies):
+                    cell.configure(with: upcomingMovies)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            
+        case Sections.topRated.rawValue:
+            APICaller.shared.getTopRated { res in
+                switch res {
+                case .success(let topRateds):
+                    cell.configure(with: topRateds)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            
+        default:
+            break
+        }
+        
         cell.parent = self
         return cell
     }

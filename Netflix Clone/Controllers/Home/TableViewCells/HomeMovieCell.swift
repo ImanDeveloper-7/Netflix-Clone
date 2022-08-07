@@ -12,6 +12,7 @@ class HomeMovieCell: UITableViewCell {
     @IBOutlet weak var collection_movie: UICollectionView!
     
     weak var parent: UIViewController?
+    private var movies: [MovieRes] = []
     
     static let identifier = "HomeMovieCell"
     
@@ -33,6 +34,17 @@ class HomeMovieCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    public func configure(with movies: [MovieRes]) {
+        self.movies = movies
+        self.reloadData()
+    }
+    
+    private func reloadData() {
+        DispatchQueue.main.async {
+            self.collection_movie.reloadData()
+        }
+    }
+    
 }
 
 extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -42,16 +54,19 @@ extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return self.movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { fatalError("MovieCollectionViewCell not found") }
-        cell.img_movie.image = UIImage(named: "lego")
         cell.parent = self.parent
-        return cell
         
+        let movie = self.movies[indexPath.row]
+        if let poster = movie.posterPath {
+            cell.configureCell(with: poster)
+        }
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
