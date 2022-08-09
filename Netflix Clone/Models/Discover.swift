@@ -1,14 +1,14 @@
 //
-//  Movie.swift
+//  Discover.swift
 //  Netflix Clone
 //
-//  Created by Iman Zabihi on 05/08/2022.
+//  Created by Iman Zabihi on 08/08/2022.
 //
 
 import Foundation
 
-// MARK: - Movie
-struct TrendingMovie: Codable {
+// MARK: - DiscoverMovie
+struct DiscoverMovie: Codable {
     let page: Int
     let results: [MovieRes]
     let totalPages, totalResults: Int

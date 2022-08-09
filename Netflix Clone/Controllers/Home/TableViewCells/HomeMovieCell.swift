@@ -36,15 +36,10 @@ class HomeMovieCell: UITableViewCell {
     
     public func configure(with movies: [MovieRes]) {
         self.movies = movies
-        self.reloadData()
-    }
-    
-    private func reloadData() {
         DispatchQueue.main.async {
             self.collection_movie.reloadData()
         }
     }
-    
 }
 
 extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -70,10 +65,29 @@ extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "MovieDetailsVC")
-        vc.modalPresentationStyle = .fullScreen
-        self.parent?.present(vc, animated: true)
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let movie = self.movies[indexPath.row]
+        
+        if let movieTitle = movie.originalTitle {
+            APICaller.shared.getYoutubeVideo(with: movieTitle + "trailer") { res in
+                switch res {
+                case .success(let videoElement):
+                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "MovieDetailsVC") as! MovieDetailsVC
+                        vc.modalPresentationStyle = .fullScreen
+                        vc.movieTitle = movieTitle
+                        vc.movieOverView = movie.overview ?? ""
+                        self.parent?.present(vc, animated: true)
+                        print(videoElement.id)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

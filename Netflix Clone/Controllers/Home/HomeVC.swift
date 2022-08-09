@@ -13,8 +13,6 @@ class HomeVC: UIViewController {
     
     let sectionTitles: [String] = ["Trending Movies", "Trending TV", "Popular", "UpComing Movies", "Top Rated"]
     
-    var movies: [MovieRes] = []
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -26,7 +24,7 @@ class HomeVC: UIViewController {
     
     private func setupUI() {
         self.tbl_home.register(HomeMovieCell.nib(), forCellReuseIdentifier: HomeMovieCell.identifier)
-        
+        self.tbl_home.separatorStyle = .none
         let headerView = HeroImageView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         self.tbl_home.tableHeaderView = headerView
         self.view.backgroundColor = .systemBackground
