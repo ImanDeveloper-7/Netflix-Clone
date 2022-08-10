@@ -91,7 +91,7 @@ extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, U
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         let vc = storyboard.instantiateViewController(withIdentifier: "MovieDetailsVC") as! MovieDetailsVC
                         vc.modalPresentationStyle = .fullScreen
-                        vc.movieTitle = movieTitle
+                        vc.movieTitle = movieTitle ?? movie.originalName ?? movie.name ?? ""
                         vc.movieOverView = movie.overview ?? ""
                         vc.movieId = videoElement.id.videoID
                         self.parent?.present(vc, animated: true)
