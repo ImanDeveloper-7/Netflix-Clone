@@ -94,6 +94,7 @@ extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, U
                         vc.movieTitle = movieTitle ?? movie.originalName ?? movie.name ?? ""
                         vc.movieOverView = movie.overview ?? ""
                         vc.movieId = videoElement.id.videoID
+                        vc.movies = movie
                         self.parent?.present(vc, animated: true)
                         print(videoElement.id)
                     }

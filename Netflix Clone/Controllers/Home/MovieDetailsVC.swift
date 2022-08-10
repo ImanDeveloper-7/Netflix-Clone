@@ -15,6 +15,7 @@ class MovieDetailsVC: UIViewController {
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var btn_download: UIButton!
     
+    var movies: MovieRes?
     var movieTitle: String?
     var movieOverView: String?
     var movieId: String?
@@ -29,7 +30,18 @@ class MovieDetailsVC: UIViewController {
     }
     
     @IBAction func download(_ sender: UIButton) {
-        print("download")
+        if let movies = self.movies {
+            CoreDataManager.shared.downloadMovie(with: movies) { res in
+                switch res {
+                case .success(_):
+                    let alert = UIAlertController(title: "Added to favourite!", message: "", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
     }
     
     @IBAction func dismiss(_ sender: UIButton) {

@@ -26,6 +26,7 @@ class CoreDataManager {
         movie.title = model.originalTitle
         movie.overview = model.overview
         movie.originalName = model.originalName
+        movie.movieTitle = model.name
         
         do {
             try context.save()
