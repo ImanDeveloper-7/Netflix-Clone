@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeMovieCell: UITableViewCell {
     
@@ -40,6 +41,18 @@ class HomeMovieCell: UITableViewCell {
             self.collection_movie.reloadData()
         }
     }
+    
+    private func downloadMovieAt(indexPath: IndexPath) {
+        let movie = self.movies[indexPath.row]
+        CoreDataManager.shared.downloadMovie(with: movie) { res in
+            switch res {
+            case .success():
+                print("Download Successful!")
+            case .failure(let error):
+                print("Error downloading the movie: \(error)")
+            }
+        }
+    }
 }
 
 extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -69,8 +82,8 @@ extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, U
         
         let movie = self.movies[indexPath.row]
         
-        if let movieTitle = movie.originalTitle {
-            APICaller.shared.getYoutubeVideo(with: movieTitle + "trailer") { res in
+         let movieTitle = movie.originalTitle
+        APICaller.shared.getYoutubeVideo(with: movieTitle ?? movie.originalName ?? movie.name ?? "" + "trailer") { res in
                 switch res {
                 case .success(let videoElement):
                     
@@ -80,6 +93,7 @@ extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, U
                         vc.modalPresentationStyle = .fullScreen
                         vc.movieTitle = movieTitle
                         vc.movieOverView = movie.overview ?? ""
+                        vc.movieId = videoElement.id.videoID
                         self.parent?.present(vc, animated: true)
                         print(videoElement.id)
                     }
@@ -87,10 +101,24 @@ extension HomeMovieCell: UICollectionViewDelegate, UICollectionViewDataSource, U
                     print(error)
                 }
             }
-        }
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 120, height: 160)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let configuration = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil) { _ in
+                let downloadAction = UIAction(title: "Download", subtitle: nil, image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { _ in
+                    self.downloadMovieAt(indexPath: indexPath)
+                }
+                
+                return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [downloadAction])
+            }
+        
+        return configuration
     }
 }

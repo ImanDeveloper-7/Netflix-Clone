@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchVC: UIViewController {
-
+    
     @IBOutlet weak var tbl_search: UITableView!
     
     var movies: [MovieRes] = []
@@ -85,9 +85,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         
         cell.lbl_title.text = movie.originalTitle
         if let poster = movie.posterPath {
-            if let url = URL(string: "https://image.tmdb.org/t/p/w500/\(poster)") {
-                cell.img_upcomingMovie.sd_setImage(with: url)
-            }
+            cell.configureCell(with: poster)
         }
         
         return cell
@@ -95,5 +93,32 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let movie = self.movies[indexPath.row]
+        
+        if let movieTitle = movie.originalTitle {
+            APICaller.shared.getYoutubeVideo(with: movieTitle + "trailer") { res in
+                switch res {
+                case .success(let videoElement):
+                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "MovieDetailsVC") as! MovieDetailsVC
+                        vc.modalPresentationStyle = .fullScreen
+                        vc.movieTitle = movieTitle
+                        vc.movieOverView = movie.overview ?? ""
+                        vc.movieId = videoElement.id.videoID
+                        self.parent?.present(vc, animated: true)
+                        print(videoElement.id)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
     }
 }

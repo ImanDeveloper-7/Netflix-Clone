@@ -12,6 +12,8 @@ class HomeVC: UIViewController {
     @IBOutlet weak var tbl_home: UITableView!
     
     let sectionTitles: [String] = ["Trending Movies", "Trending TV", "Popular", "UpComing Movies", "Top Rated"]
+    private var randomTrendingMovie: MovieRes?
+    private var headerView: HeroImageView?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -20,14 +22,29 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
+        self.confidureHeaderView()
     }
     
     private func setupUI() {
         self.tbl_home.register(HomeMovieCell.nib(), forCellReuseIdentifier: HomeMovieCell.identifier)
         self.tbl_home.separatorStyle = .none
-        let headerView = HeroImageView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
-        self.tbl_home.tableHeaderView = headerView
+        
+        self.headerView = HeroImageView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        self.tbl_home.tableHeaderView = self.headerView
         self.view.backgroundColor = .systemBackground
+    }
+    
+    private func confidureHeaderView() {
+        APICaller.shared.getTrendingMovies { res in
+            switch res {
+            case .success(let movies):
+                let selectedMovie = movies.randomElement()
+                self.randomTrendingMovie = selectedMovie
+                self.headerView?.configureHeaderView(with: selectedMovie?.posterPath ?? "")
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 

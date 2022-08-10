@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HeroImageView: UIView {
     
@@ -63,18 +64,23 @@ class HeroImageView: UIView {
         applyConstraints()
     }
     
+    public func configureHeaderView(with model: String) {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model)") else { return }
+        self.heroImageView.sd_setImage(with: url)
+    }
+    
     private func applyConstraints() {
         
         let playButtonConstraints = [
         
-            self.playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
+            self.playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
             self.playButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
             self.playButton.widthAnchor.constraint(equalToConstant: 120)
         ]
         
         let downloadButtonConstraints = [
         
-            self.downloadButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
+            self.downloadButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
             self.downloadButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
             self.downloadButton.widthAnchor.constraint(equalToConstant: 120)
         ]

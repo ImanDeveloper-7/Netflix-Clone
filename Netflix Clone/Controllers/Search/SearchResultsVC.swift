@@ -56,6 +56,33 @@ extension SearchResultsVC: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 120, height: 160)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let movie = self.movies[indexPath.row]
+        
+        if let movieTitle = movie.originalTitle {
+            APICaller.shared.getYoutubeVideo(with: movieTitle + "trailer") { res in
+                switch res {
+                case .success(let videoElement):
+                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "MovieDetailsVC") as! MovieDetailsVC
+                        vc.modalPresentationStyle = .fullScreen
+                        vc.movieTitle = movieTitle
+                        vc.movieOverView = movie.overview ?? ""
+                        vc.movieId = videoElement.id.videoID
+                        self.parent?.present(vc, animated: true)
+                        print(videoElement.id)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
 }
 
 

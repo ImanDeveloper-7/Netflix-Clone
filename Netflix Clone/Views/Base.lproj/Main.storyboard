@@ -67,21 +67,40 @@
             </objects>
             <point key="canvasLocation" x="1005.7971014492755" y="1508.7053571428571"/>
         </scene>
-        <!--DownloadsVC-->
+        <!--Favourites-->
         <scene sceneID="EAa-vv-uzq">
             <objects>
                 <viewController id="tjf-ad-IVt" customClass="DownloadsVC" customModule="Netflix_Clone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C96-Nb-jiL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="n35-W0-wB6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="tjf-ad-IVt" id="fcU-ia-jBZ"/>
+                                    <outlet property="delegate" destination="tjf-ad-IVt" id="dKY-3P-Co4"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="syY-Z4-HQ8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="n35-W0-wB6" firstAttribute="top" secondItem="C96-Nb-jiL" secondAttribute="top" id="L3c-9u-tGp"/>
+                            <constraint firstItem="n35-W0-wB6" firstAttribute="trailing" secondItem="syY-Z4-HQ8" secondAttribute="trailing" id="YKI-9B-uTy"/>
+                            <constraint firstAttribute="bottom" secondItem="n35-W0-wB6" secondAttribute="bottom" id="qjA-9G-4dz"/>
+                            <constraint firstItem="n35-W0-wB6" firstAttribute="leading" secondItem="syY-Z4-HQ8" secondAttribute="leading" id="syA-eo-eCW"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="74E-I9-Cn5"/>
+                    <navigationItem key="navigationItem" title="Favourites" id="74E-I9-Cn5"/>
+                    <connections>
+                        <outlet property="tbl_favourites" destination="n35-W0-wB6" id="ZCR-91-8hu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WnH-2V-VwD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1990" y="1509"/>
+            <point key="canvasLocation" x="1989.8550724637682" y="1508.7053571428571"/>
         </scene>
         <!--HomeVC-->
         <scene sceneID="WFL-fd-0nq">
@@ -207,35 +226,51 @@
                                 </constraints>
                             </view>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="whU-K0-W4f">
-                                <rect key="frame" x="20" y="96" width="374" height="240"/>
+                                <rect key="frame" x="8" y="96" width="398" height="300"/>
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="sQD-G0-1Ts"/>
+                                    <constraint firstAttribute="height" constant="300" id="sQD-G0-1Ts"/>
                                 </constraints>
                             </webView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INb-dI-7tO">
-                                <rect key="frame" x="20" y="356" width="374" height="20.5"/>
+                                <rect key="frame" x="20" y="416" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMR-w2-E5M">
+                                <rect key="frame" x="100" y="466.5" width="214" height="35"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Download">
+                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="download:" destination="vUq-LX-ZhQ" eventType="touchUpInside" id="v4W-NB-a4I"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o2I-HV-Yd7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="INb-dI-7tO" firstAttribute="leading" secondItem="o2I-HV-Yd7" secondAttribute="leading" constant="20" id="0tg-1N-qvF"/>
                             <constraint firstItem="o2I-HV-Yd7" firstAttribute="trailing" secondItem="INb-dI-7tO" secondAttribute="trailing" constant="20" id="8Nn-yu-1hg"/>
-                            <constraint firstItem="o2I-HV-Yd7" firstAttribute="trailing" secondItem="whU-K0-W4f" secondAttribute="trailing" constant="20" id="8lF-KJ-qHO"/>
+                            <constraint firstItem="o2I-HV-Yd7" firstAttribute="trailing" secondItem="whU-K0-W4f" secondAttribute="trailing" constant="8" id="8lF-KJ-qHO"/>
                             <constraint firstItem="ttq-kl-1Qc" firstAttribute="trailing" secondItem="o2I-HV-Yd7" secondAttribute="trailing" id="AFI-9e-pJo"/>
                             <constraint firstItem="ttq-kl-1Qc" firstAttribute="top" secondItem="bzI-HV-r5w" secondAttribute="top" id="EDM-OE-jiH"/>
                             <constraint firstItem="whU-K0-W4f" firstAttribute="top" secondItem="ttq-kl-1Qc" secondAttribute="bottom" constant="8" symbolic="YES" id="OD5-4h-q1g"/>
                             <constraint firstItem="ttq-kl-1Qc" firstAttribute="leading" secondItem="o2I-HV-Yd7" secondAttribute="leading" id="S7k-sR-bpw"/>
                             <constraint firstItem="INb-dI-7tO" firstAttribute="top" secondItem="whU-K0-W4f" secondAttribute="bottom" constant="20" id="SMg-jU-hRC"/>
-                            <constraint firstItem="whU-K0-W4f" firstAttribute="leading" secondItem="o2I-HV-Yd7" secondAttribute="leading" constant="20" id="kck-Zc-hNt"/>
+                            <constraint firstItem="o2I-HV-Yd7" firstAttribute="trailing" secondItem="MMR-w2-E5M" secondAttribute="trailing" constant="100" id="bED-iG-hF5"/>
+                            <constraint firstItem="MMR-w2-E5M" firstAttribute="leading" secondItem="o2I-HV-Yd7" secondAttribute="leading" constant="100" id="bWc-JB-oeO"/>
+                            <constraint firstItem="whU-K0-W4f" firstAttribute="leading" secondItem="o2I-HV-Yd7" secondAttribute="leading" constant="8" id="kck-Zc-hNt"/>
+                            <constraint firstItem="MMR-w2-E5M" firstAttribute="top" secondItem="INb-dI-7tO" secondAttribute="bottom" constant="30" id="pcy-UB-1PW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Details" id="bra-Rk-cVH"/>
                     <connections>
+                        <outlet property="btn_download" destination="MMR-w2-E5M" id="d0J-i0-Mv0"/>
                         <outlet property="lbl_overView" destination="INb-dI-7tO" id="sCV-yM-zEd"/>
                         <outlet property="lbl_title" destination="3cT-O2-XpF" id="9Aa-nC-p3N"/>
                         <outlet property="webView" destination="whU-K0-W4f" id="5j3-x8-JYb"/>
@@ -305,14 +340,14 @@
             </objects>
             <point key="canvasLocation" x="1006" y="783"/>
         </scene>
-        <!--Downloads-->
+        <!--Favourites-->
         <scene sceneID="ZYQ-9A-XWl">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ivo-Y0-KyO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Downloads" image="square.and.arrow.down" catalog="system" id="Tkh-eq-8Lk"/>
+                    <tabBarItem key="tabBarItem" title="Favourites" image="heart" catalog="system" id="Tkh-eq-8Lk"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bUM-UE-kg4">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="bUM-UE-kg4">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -327,13 +362,13 @@
     </scenes>
     <resources>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
+        <image name="heart" catalog="system" width="128" height="109"/>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="logo" width="50" height="34"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="play.circle" catalog="system" width="128" height="121"/>
         <image name="play.rectangle" catalog="system" width="128" height="93"/>
-        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

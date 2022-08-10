@@ -11,21 +11,21 @@ class MovieCell: UITableViewCell {
     
     @IBOutlet weak var img_upcomingMovie: UIImageView!
     @IBOutlet weak var lbl_title: UILabel!
+    @IBOutlet weak var btn_play: UIButton!
     
     static let identifier = "MovieCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.btn_play.layer.cornerRadius = 14
     }
     
     static func nib() -> UINib {
         return UINib(nibName: "MovieCell", bundle: nil)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
+    public func configureCell(with model: String) {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model)") else { return }
+        self.img_upcomingMovie.sd_setImage(with: url)
+    }
 }

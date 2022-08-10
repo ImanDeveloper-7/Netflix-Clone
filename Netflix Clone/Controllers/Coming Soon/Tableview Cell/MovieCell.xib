@@ -57,6 +57,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="btn_play" destination="dT5-wA-exJ" id="B2E-m2-84J"/>
                 <outlet property="img_upcomingMovie" destination="Qoo-oO-rqw" id="jLd-1G-TOr"/>
                 <outlet property="lbl_title" destination="gY8-Ow-0SB" id="PIG-gt-8tW"/>
             </connections>
