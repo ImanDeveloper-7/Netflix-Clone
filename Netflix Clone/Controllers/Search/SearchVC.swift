@@ -121,4 +121,23 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastItem = self.movies.count - 1
+        if indexPath.row == lastItem {
+//            self.tbl_movie.tableFooterView = self.createSpinnerFooter()
+//            self.pageNumber += 1
+//            if let url = URL(string: "\(self.urlString)&page=\(self.pageNumber)") {
+//                WebService.getMovies(url: url) { newMovies in
+//                    if let newMovies = newMovies {
+//                        self.movies.append(contentsOf: newMovies)
+//                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+//                            self.tbl_movie.tableFooterView = nil
+//                            self.tbl_movie.reloadData()
+//                        }
+//                    }
+//                }
+//            }
+        }
+    }
 }
