@@ -270,6 +270,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Details" id="bra-Rk-cVH"/>
                     <connections>
+                        <outlet property="btn_dismiss" destination="2Vr-Co-Qo5" id="luo-Ct-bSu"/>
                         <outlet property="btn_download" destination="MMR-w2-E5M" id="d0J-i0-Mv0"/>
                         <outlet property="lbl_overView" destination="INb-dI-7tO" id="sCV-yM-zEd"/>
                         <outlet property="lbl_title" destination="3cT-O2-XpF" id="9Aa-nC-p3N"/>

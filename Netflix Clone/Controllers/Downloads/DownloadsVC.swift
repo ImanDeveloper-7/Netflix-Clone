@@ -79,6 +79,7 @@ extension DownloadsVC: UITableViewDelegate, UITableViewDataSource {
                     vc.movieTitle = movieTitle ?? movie.originalName ?? movie.movieTitle ?? ""
                     vc.movieOverView = movie.overview ?? ""
                     vc.movieId = videoElement.id.videoID
+                    vc.isHidden = true
                     self.parent?.present(vc, animated: true)
                     print(videoElement.id)
                 }

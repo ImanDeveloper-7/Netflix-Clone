@@ -14,11 +14,13 @@ class MovieDetailsVC: UIViewController {
     @IBOutlet weak var lbl_overView: UILabel!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var btn_download: UIButton!
+    @IBOutlet weak var btn_dismiss: UIButton!
     
     var movies: MovieRes?
     var movieTitle: String?
     var movieOverView: String?
     var movieId: String?
+    var isHidden: Bool = false
     
 
     override func viewDidLoad() {
@@ -26,6 +28,7 @@ class MovieDetailsVC: UIViewController {
         
         self.lbl_title.text = self.movieTitle
         self.lbl_overView.text = self.movieOverView
+        self.btn_download.isHidden = self.isHidden
         self.playVideo()
     }
     
